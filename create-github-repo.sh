@@ -47,7 +47,7 @@ fi
 
 # Get GitHub username from the token
 echo "🔍 Verifying GitHub token..."
-GITHUB_USER=$(curl -s -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/user | grep -o '"login":"[^"]*"' | cut -d'"' -f4)
+GITHUB_USER=$(curl -s -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/user | python3 -c "import sys, json; print(json.load(sys.stdin)['login'])" 2>/dev/null)
 
 if [ -z "$GITHUB_USER" ]; then
     echo "❌ Invalid GitHub token or API error!"
