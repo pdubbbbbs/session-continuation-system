@@ -27,7 +27,7 @@ GITHUB_TOKEN=your_token_here ./create-github-repo.sh
 
 **Example**:
 ```bash
-GITHUB_TOKEN=ghp_1234567890abcdef1234567890abcdef12345678 ./create-github-repo.sh
+GITHUB_TOKEN=YOUR_GITHUB_TOKEN ./create-github-repo.sh
 ```
 
 ## 🎉 **What the Script Does**

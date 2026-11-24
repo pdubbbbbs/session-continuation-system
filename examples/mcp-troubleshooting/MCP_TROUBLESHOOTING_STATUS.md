@@ -2,7 +2,7 @@
 
 **Date:** August 30, 2025 - 21:23 UTC  
 **Issue:** MCP servers not appearing in Warp Terminal panel despite proper configuration  
-**Current Directory:** `/Users/fuckyou22/mcp-servers`
+**Current Directory:** `/Users/YOUR_USER/mcp-servers`
 
 ## 🔍 Issue Summary
 User has 5 deployed MCP servers on Cloudflare Workers with properly configured bridge scripts, but they are not showing up in the Warp Terminal MCP panel even after restarting Warp multiple times.
@@ -18,11 +18,11 @@ User has 5 deployed MCP servers on Cloudflare Workers with properly configured b
   - contact7-mcp-server.dev111.workers.dev
 
 ### 2. Bridge Scripts
-- **All 5 bridge scripts exist** in `/Users/fuckyou22/mcp-servers/mcp-bridge/`
+- **All 5 bridge scripts exist** in `/Users/YOUR_USER/mcp-servers/mcp-bridge/`
 - **Bridge scripts are executable** and respond correctly to MCP protocol
 - **Tested working example:**
   ```bash
-  echo '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{}}' | node /Users/fuckyou22/mcp-servers/mcp-bridge/puppeteer-bridge.js
+  echo '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{}}' | node /Users/YOUR_USER/mcp-servers/mcp-bridge/puppeteer-bridge.js
   # Returns proper MCP initialization response
   ```
 
@@ -42,20 +42,20 @@ User has 5 deployed MCP servers on Cloudflare Workers with properly configured b
 
 ### Configuration Locations Tried
 1. `~/.config/warp/mcp-servers.json` (standard location)
-2. `/Users/fuckyou22/Library/Application Support/dev.warp.Warp-Stable/mcp-servers.json` (alternative)
-3. Created test directory at `/Users/fuckyou22/Library/Application Support/dev.warp.Warp-Stable/mcp/`
+2. `/Users/YOUR_USER/Library/Application Support/dev.warp.Warp-Stable/mcp-servers.json` (alternative)
+3. Created test directory at `/Users/YOUR_USER/Library/Application Support/dev.warp.Warp-Stable/mcp/`
 
 ### File Permissions
-- Made all bridge scripts executable: `chmod +x /Users/fuckyou22/mcp-servers/mcp-bridge/*.js`
+- Made all bridge scripts executable: `chmod +x /Users/YOUR_USER/mcp-servers/mcp-bridge/*.js`
 
 ### Log Analysis
-- Checked Warp network logs: `/Users/fuckyou22/Library/Application Support/dev.warp.Warp-Stable/warp_network.log`
+- Checked Warp network logs: `/Users/YOUR_USER/Library/Application Support/dev.warp.Warp-Stable/warp_network.log`
 - Confirmed MCP functionality exists in Warp binary (extensive MCP strings found)
 
 ## 🧪 Current Test Setup
 
 ### Simple Test Server Created
-- **File:** `/Users/fuckyou22/mcp-servers/test-mcp-server.js`
+- **File:** `/Users/YOUR_USER/mcp-servers/test-mcp-server.js`
 - **Purpose:** Minimal MCP server to isolate configuration issues
 - **Status:** Executable and responding correctly to MCP protocol
 
@@ -66,7 +66,7 @@ User has 5 deployed MCP servers on Cloudflare Workers with properly configured b
   "mcpServers": {
     "test-mcp": {
       "command": "node",
-      "args": ["/Users/fuckyou22/mcp-servers/test-mcp-server.js"],
+      "args": ["/Users/YOUR_USER/mcp-servers/test-mcp-server.js"],
       "env": {}
     }
   }
@@ -107,15 +107,15 @@ cp ~/.config/warp/mcp-servers.json.backup2 ~/.config/warp/mcp-servers.json
 ### Configuration Files
 - Current: `~/.config/warp/mcp-servers.json` (test config)
 - Backup: `~/.config/warp/mcp-servers.json.backup2` (full config)
-- Alternative: `/Users/fuckyou22/Library/Application Support/dev.warp.Warp-Stable/mcp-servers.json`
+- Alternative: `/Users/YOUR_USER/Library/Application Support/dev.warp.Warp-Stable/mcp-servers.json`
 
 ### MCP Servers
-- Bridge scripts: `/Users/fuckyou22/mcp-servers/mcp-bridge/`
-- Test server: `/Users/fuckyou22/mcp-servers/test-mcp-server.js`
-- Deployment info: `/Users/fuckyou22/mcp-servers/warp-mcp-config.json`
+- Bridge scripts: `/Users/YOUR_USER/mcp-servers/mcp-bridge/`
+- Test server: `/Users/YOUR_USER/mcp-servers/test-mcp-server.js`
+- Deployment info: `/Users/YOUR_USER/mcp-servers/warp-mcp-config.json`
 
 ### Warp Data
-- App Support: `/Users/fuckyou22/Library/Application Support/dev.warp.Warp-Stable/`
+- App Support: `/Users/YOUR_USER/Library/Application Support/dev.warp.Warp-Stable/`
 - Network logs: `warp_network.log`
 - Database: `warp.sqlite`
 
@@ -125,7 +125,7 @@ After restart, you should see "test-mcp" in the Warp MCP panel. If this appears,
 ## 📞 Troubleshooting Commands Ready
 ```bash
 # Test bridge script manually
-echo '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{}}' | node /Users/fuckyou22/mcp-servers/test-mcp-server.js
+echo '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{}}' | node /Users/YOUR_USER/mcp-servers/test-mcp-server.js
 
 # Check config validity
 cat ~/.config/warp/mcp-servers.json | python3 -m json.tool
@@ -145,7 +145,7 @@ ps aux | grep -i warp
 Warp was reading MCP configuration from the **WRONG LOCATION**!
 
 - ❌ **Wrong:** `~/.config/warp/mcp-servers.json` (where we were testing)
-- ✅ **Correct:** `/Users/fuckyou22/Library/Application Support/dev.warp.Warp-Stable/mcp-servers.json`
+- ✅ **Correct:** `/Users/YOUR_USER/Library/Application Support/dev.warp.Warp-Stable/mcp-servers.json`
 
 ### ✅ **SOLUTION IMPLEMENTED**
 1. **Found MCP settings in Warp preferences:** `MCPExecutionPath` confirmed MCP is enabled

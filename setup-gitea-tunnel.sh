@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # Cloudflare Tunnel Setup for Gitea
-# Creates tunnel for Gitea running on https://alwaysunder.me:8001
+# Creates tunnel for Gitea running on https://localhost:8001
 
 set -e
 
 TUNNEL_NAME="gitea-tunnel"
 LOCAL_SERVICE="https://localhost:8001"
-DOMAIN="alwaysunder.me"
+DOMAIN="${DOMAIN:?Set DOMAIN to your own domain, for example DOMAIN=example.com}"
 SUBDOMAIN="git"
 FULL_DOMAIN="$SUBDOMAIN.$DOMAIN"
 

@@ -11,7 +11,7 @@
 - **Status:** All 5 MCP servers configured and ready
 
 ### 📍 **CURRENT STATE**
-**MCP Configuration Location:** `/Users/fuckyou22/Library/Application Support/dev.warp.Warp-Stable/mcp-servers.json`
+**MCP Configuration Location:** `/Users/YOUR_USER/Library/Application Support/dev.warp.Warp-Stable/mcp-servers.json`
 
 **Configured MCP Servers:**
 - ✅ github-mcp
@@ -20,7 +20,7 @@
 - ✅ sentry-mcp
 - ✅ contact7-mcp
 
-**Bridge Scripts:** All working and executable in `/Users/fuckyou22/mcp-servers/mcp-bridge/`
+**Bridge Scripts:** All working and executable in `/Users/YOUR_USER/mcp-servers/mcp-bridge/`
 
 ## 🔄 **IMMEDIATE NEXT STEP**
 1. **User is restarting Warp Terminal**
@@ -31,10 +31,10 @@
 ## 📋 **VERIFICATION COMMANDS**
 ```bash
 # Check configuration file
-cat "/Users/fuckyou22/Library/Application Support/dev.warp.Warp-Stable/mcp-servers.json"
+cat "/Users/YOUR_USER/Library/Application Support/dev.warp.Warp-Stable/mcp-servers.json"
 
 # Test bridge script
-echo '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{}}' | node /Users/fuckyou22/mcp-servers/mcp-bridge/github-bridge.js
+echo '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{}}' | node /Users/YOUR_USER/mcp-servers/mcp-bridge/github-bridge.js
 ```
 
 ## 🎉 **SUCCESS CRITERIA**

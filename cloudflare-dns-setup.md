@@ -1,26 +1,26 @@
 # 🌐 Cloudflare DNS Setup for Gitea Tunnel
 
 ## Current Status
-- ✅ **Tunnel Created**: `gitea-tunnel` (ID: `16e91b23-0ebf-40b4-b828-af71e1b287b7`)
+- ✅ **Tunnel Created**: `gitea-tunnel` (ID: `YOUR_TUNNEL_ID`)
 - ✅ **Tunnel Running**: 4 connections established
 - ⚠️  **DNS Issue**: Route created under wrong domain
 
 ## DNS Configuration Issue
 
-Cloudflare created: `git.alwaysunder.me.philipwright.me` ❌  
-We need: `git.alwaysunder.me` ✅
+Cloudflare created: `git.example.com.otherdomain.com` ❌  
+We need: `git.example.com` ✅
 
 ## Manual DNS Setup Required
 
 ### Option 1: Cloudflare Dashboard (Recommended)
 
 1. **Go to Cloudflare Dashboard**: https://dash.cloudflare.com
-2. **Select `alwaysunder.me` domain**
+2. **Select `example.com` domain**
 3. **Go to DNS Records**
 4. **Add CNAME Record**:
    - **Type**: CNAME
    - **Name**: `git`
-   - **Target**: `16e91b23-0ebf-40b4-b828-af71e1b287b7.cfargotunnel.com`
+   - **Target**: `YOUR_TUNNEL_ID.cfargotunnel.com`
    - **Proxy Status**: Proxied (orange cloud)
 
 ### Option 2: CLI Commands (if you have Cloudflare API token)
@@ -36,22 +36,22 @@ curl -X POST "https://api.cloudflare.com/client/v4/zones/ZONE_ID/dns_records" \
   --data '{
     "type": "CNAME",
     "name": "git",
-    "content": "16e91b23-0ebf-40b4-b828-af71e1b287b7.cfargotunnel.com",
+    "content": "YOUR_TUNNEL_ID.cfargotunnel.com",
     "proxied": true
   }'
 ```
 
 ## Tunnel Configuration
 
-### Current Config: `/Users/fuckyou22/.cloudflared/config.yml`
+### Current Config: `/Users/YOUR_USER/.cloudflared/config.yml`
 ```yaml
-tunnel: 16e91b23-0ebf-40b4-b828-af71e1b287b7
-credentials-file: /Users/fuckyou22/.cloudflared/16e91b23-0ebf-40b4-b828-af71e1b287b7.json
+tunnel: YOUR_TUNNEL_ID
+credentials-file: /Users/YOUR_USER/.cloudflared/YOUR_TUNNEL_ID.json
 
 ingress:
-  - hostname: git.alwaysunder.me
+  - hostname: git.example.com
     service: https://localhost:8001
-    originServerName: git.alwaysunder.me
+    originServerName: git.example.com
   - service: http_status:404
 ```
 
@@ -72,14 +72,14 @@ Once DNS is configured (may take a few minutes to propagate):
 
 ```bash
 # Test DNS resolution
-nslookup git.alwaysunder.me
-dig git.alwaysunder.me
+nslookup git.example.com
+dig git.example.com
 
 # Test HTTPS connection
-curl -I https://git.alwaysunder.me
+curl -I https://git.example.com
 
 # Test in browser
-open https://git.alwaysunder.me
+open https://git.example.com
 ```
 
 ## Update Git Remote
@@ -88,7 +88,7 @@ Once the tunnel is working:
 
 ```bash
 # Update gitea remote to use new domain
-git remote set-url gitea https://git.alwaysunder.me/pdubbbbbs/session-continuation-system.git
+git remote set-url gitea https://git.example.com/pdubbbbbs/session-continuation-system.git
 
 # Test git connection
 git ls-remote gitea
@@ -125,14 +125,14 @@ curl -k https://localhost:8001
 
 1. ✅ **DNS Setup**: Add CNAME record in Cloudflare dashboard
 2. ⏳ **DNS Propagation**: Wait 5-10 minutes for DNS to propagate
-3. 🧪 **Test Access**: Visit https://git.alwaysunder.me
+3. 🧪 **Test Access**: Visit https://git.example.com
 4. 🔗 **Update Git Remote**: Point to new tunnel domain
 5. 🚀 **Push Code**: Test git push to tunnel
 
 ## Expected Outcome
 
 Once DNS is configured:
-- **Public URL**: https://git.alwaysunder.me
+- **Public URL**: https://git.example.com
 - **Local Service**: https://localhost:8001 (your Gitea)
 - **Secure**: All traffic encrypted through Cloudflare tunnel
 - **No Firewall Issues**: No need to open ports or configure firewalls
